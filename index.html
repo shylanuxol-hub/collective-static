@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>collective static</title>
+<style>
+:root{
+  --design-width:3456;  /* your PSD size */
+  --design-height:2044;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:#000}
+
+/* stage keeps PSD aspect and scales */
+.stage{
+  position:relative;
+  width:min(100vw, calc(100vh * (var(--design-width)/var(--design-height))));
+  aspect-ratio:calc(var(--design-width)/var(--design-height));
+  margin:0 auto;
+  overflow:hidden;
+}
+
+/* base bg */
+.layer.base{
+  position:absolute; inset:0;
+  width:100%; height:100%; object-fit:cover;
+}
+
+/* positioned layers using PSD pixels */
+.layer.abs{
+  position:absolute;
+  left:  calc(var(--x)/var(--design-width)*100%);
+  top:   calc(var(--y)/var(--design-height)*100%);
+  width: calc(var(--w)/var(--design-width)*100%);
+  height:auto;
+  pointer-events:none;
+}
+
+.z-low{z-index:1} .z-mid{z-index:5} .z-high{z-index:10}
+</style>
+</head>
+<body>
+  <div class="stage" role="img" aria-label="collective static layered composition">
+    <!-- background -->
+    <img class="layer base" src="images/bliss_background.png" alt="Windows XP background" />
+
+    <!-- desktop icons -->
+    <img class="layer abs z-mid" style="--x:80;  --y:68;  --w:200;" src="images/internet-icon.png" alt="">
+    <img class="layer abs z-mid" style="--x:363; --y:68;  --w:200;" src="images/folder-icon.png"   alt="">
+    <img class="layer abs z-mid" style="--x:648; --y:68;  --w:200;" src="images/cd-icon.png"       alt="">
+
+    <!-- big notepad + instructions (below) -->
+    <img class="layer abs z-low" style="--x:74;  --y:692; --w:2101;" src="images/untitled-notepad_wide.jpg" alt="">
+    <img class="layer abs z-low" style="--x:108; --y:843; --w:1215;" src="images/collective-static_instructions.png" alt="">
+
+    <!-- small notepad + ASCII (above) -->
+    <img class="layer abs z-high" style="--x:1012; --y:456; --w:896;" src="images/untitled-notepad_small.png" alt="">
+    <img class="layer abs z-high" style="--x:1110; --y:605; --w:658;" src="images/acsii-star.png" alt="">
+
+    <!-- MS paint -->
+    <img class="layer abs z-high" style="--x:2333; --y:51; --w:1064;"  src="images/microsoft-paint-window.png" alt="paint art">
+  </div>
+</body>
+</html>
